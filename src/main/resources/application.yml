@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: Blog-platform
+
+  output:
+    ansi:
+      enables:
+        ALWAYS
+
+  profiles:
+    active: dev
