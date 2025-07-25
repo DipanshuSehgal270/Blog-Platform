@@ -47,6 +47,12 @@ public class User {
     @Column(nullable = false)
     private Role userrole = Role.ROLE_USER;
 
+    @Column(length = 255)
+    private String profileImageUrl;
+
+    @Column(length = 150)
+    private String bio;
+
     @OneToMany(mappedBy = "author")
     @JsonIgnore  // Prevent circular loop
     private List<Post> posts;

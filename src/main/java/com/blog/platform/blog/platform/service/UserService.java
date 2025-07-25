@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 
-
 @Service
 public class UserService {
 
@@ -75,7 +74,9 @@ public class UserService {
                 user.getUsername(),
                 user.getEmail(),
                 user.getUserrole().name(),
-                user.isEnabled()
+                user.isEnabled(),
+                user.getBio(),
+                user.getProfileImageUrl()
         );
     }
 

@@ -22,5 +22,12 @@ public class UserResponse {
 
     @Schema(example = "true", description = "Whether the user is enabled or not")
     private boolean enabled;
+
+    @Schema(example = "https://cdn.blog.com/profile/john_doe.jpg", description = "URL to user's profile image")
+    private String profileImageUrl;
+
+    @Schema(example = "I’m a backend dev who loves Spring Boot!", description = "User bio or description")
+    private String bio;
+
 }
 
