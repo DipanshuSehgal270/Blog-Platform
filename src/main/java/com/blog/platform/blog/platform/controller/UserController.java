@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/auth/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -33,26 +33,6 @@ public class UserController {
     })
     @PostMapping("/register")
     public ResponseEntity<UserResponse> registerUser(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "User registration payload",
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    name = "Register Example",
-                                    summary = "Sample request",
-                                    value = """
-                        {
-                          "username": "john_doe",
-                          "email": "john@example.com",
-                          "password": "P@ssw0rd",
-                          "userRole": "ROLE_USER",
-                          "enabled": true
-                        }
-                        """
-                            )
-                    )
-            )
             @RequestBody RegisterRequest request
     ) {
         UserResponse savedUser = userService.saveUserWithDto(request);

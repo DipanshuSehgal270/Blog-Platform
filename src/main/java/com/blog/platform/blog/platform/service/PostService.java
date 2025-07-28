@@ -29,7 +29,7 @@ public class PostService {
         Post post = new Post();
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
-        post.setAuthor(author);
+        post.setUser(author);
 
         Post savedPost = postRepository.save(post);
         return mapToPostResponse(savedPost);
@@ -76,11 +76,14 @@ public class PostService {
         response.setContent(post.getContent());
 
         AuthorInfoDto authorDto = new AuthorInfoDto(
-                post.getAuthor().getUsername(),
-                post.getAuthor().getProfileImageUrl()
+                post.getUser().getUsername(),
+                post.getUser().getProfileImageUrl()
         );
 
         response.setAuthor(authorDto);
         return response;
     }
+
+
+    //TODO HOMEPAGE METHOD
 }
