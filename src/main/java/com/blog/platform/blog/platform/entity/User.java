@@ -1,26 +1,31 @@
 package com.blog.platform.blog.platform.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Data
+@Builder // Added Builder for the AuthService
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements UserDetails { // <-- IMPLEMENTS UserDetails
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +33,7 @@ public class User {
 
     @NotBlank(message = "username should not be left blank")
     @Size(min = 3, max = 100)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true) // Added unique constraint
     private String username;
 
     @NotBlank(message = "email field is required")
@@ -38,7 +43,7 @@ public class User {
     private String email;
 
     @NotBlank(message = "password is required")
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 100) // Increased max size for hashed password
     @JsonIgnore
     @Column(nullable = false)
     private String password;
@@ -53,8 +58,8 @@ public class User {
     @Column(length = 150)
     private String bio;
 
-    @OneToMany(mappedBy = "author")
-    @JsonIgnore  // Prevent circular loop
+    @OneToMany(mappedBy = "user") // Changed from 'author' to 'user' to match Comment entity
+    @JsonIgnore
     private List<Post> posts;
 
     @Column(nullable = false)
@@ -69,15 +74,40 @@ public class User {
     private LocalDateTime updatedAt;
 
 
-//    @PrePersist
-//    public void prepersist(){
-//        createdAt = LocalDateTime.now();
-//        updatedAt = LocalDateTime.now();
-//    }
-//
-//    @PreUpdate
-//    public void preupdate(){
-//        updatedAt = LocalDateTime.now();
-//    }
+    // --- UserDetails Methods ---
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(userrole.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // Or add logic for account expiration
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // Or add logic for account locking
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // Or add logic for password expiration
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

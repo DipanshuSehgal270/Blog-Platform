@@ -26,10 +26,15 @@ public class Post {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "author_id", nullable = false)
+//    @JsonIgnore
+//    private User author;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
-    private User author;
+    private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
