@@ -28,9 +28,6 @@ public class CommentResponse {
     @Schema(description = "Number of dislikes on this comment")
     private int dislikes;
 
-//    @Schema(description = "If this comment is a reply to another")
-//    private boolean isReply;
-
     @Schema(description = "Timestamp of comment creation")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;

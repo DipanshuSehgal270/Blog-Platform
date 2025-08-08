@@ -11,7 +11,6 @@ public interface CommentMapper {
 
     @Mapping(target = "username", source = "user.username")
     @Mapping(target = "profileImageUrl", source = "user.profileImageUrl")
-//    @Mapping(target = "isReply", expression = "java(comment.getParent()!=null)")
     @Mapping(target = "likes", ignore = true)
     @Mapping(target = "dislikes", ignore = true)
     CommentResponse toResponse(Comment comment);
@@ -22,6 +21,5 @@ public interface CommentMapper {
     @Mapping(target = "post", ignore = true)
     @Mapping(target = "parent", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-//    @Mapping(target = "isReply", ignore = true)
     Comment toEntity(CommentResponse response);
 }
