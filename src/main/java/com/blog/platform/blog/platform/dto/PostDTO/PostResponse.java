@@ -1,5 +1,6 @@
-package com.blog.platform.blog.platform.dto;
+package com.blog.platform.blog.platform.dto.PostDTO;
 
+import com.blog.platform.blog.platform.dto.AuthorInfoDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

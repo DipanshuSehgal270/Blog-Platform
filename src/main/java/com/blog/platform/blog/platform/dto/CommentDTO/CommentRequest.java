@@ -1,4 +1,4 @@
-package com.blog.platform.blog.platform.dto;
+package com.blog.platform.blog.platform.dto.CommentDTO;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

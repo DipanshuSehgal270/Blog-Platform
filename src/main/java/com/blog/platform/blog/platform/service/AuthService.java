@@ -1,8 +1,8 @@
 package com.blog.platform.blog.platform.service;
 
 import com.blog.platform.blog.platform.dto.AuthResponse;
-import com.blog.platform.blog.platform.dto.UserLoginRequest;
-import com.blog.platform.blog.platform.dto.RegisterRequest;
+import com.blog.platform.blog.platform.dto.UserDTO.UserLoginRequest;
+import com.blog.platform.blog.platform.dto.UserDTO.RegisterRequest;
 import com.blog.platform.blog.platform.entity.Role;
 import com.blog.platform.blog.platform.entity.User;
 import com.blog.platform.blog.platform.repository.UserRepository;
@@ -31,7 +31,7 @@ public class AuthService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword())) // Hash the password
-                .userrole(Role.ROLE_USER) // Assign default role
+                .userrole(request.getUserRole()) // Assign default role
                 .build();
 
         // Save the new user to the database

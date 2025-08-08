@@ -1,4 +1,4 @@
-package com.blog.platform.blog.platform.dto;
+package com.blog.platform.blog.platform.dto.UserDTO;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

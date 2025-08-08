@@ -1,17 +1,16 @@
 package com.blog.platform.blog.platform.controller;
 
-import com.blog.platform.blog.platform.dto.RegisterRequest;
-import com.blog.platform.blog.platform.dto.UpdateUserRequest;
-import com.blog.platform.blog.platform.dto.UserResponse;
+import com.blog.platform.blog.platform.dto.UserDTO.RegisterRequest;
+import com.blog.platform.blog.platform.dto.UserDTO.UpdateUserRequest;
+import com.blog.platform.blog.platform.dto.UserDTO.UserResponse;
 import com.blog.platform.blog.platform.entity.User;
 import com.blog.platform.blog.platform.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -22,22 +21,6 @@ public class UserController {
 
     private final UserService userService;
 
-    // Register a new user
-    @Operation(
-            summary = "Register a new user",
-            description = "Creates a new user using RegisterRequest DTO and returns the created user"
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "User registered successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input data")
-    })
-    @PostMapping("/register")
-    public ResponseEntity<UserResponse> registerUser(
-            @RequestBody RegisterRequest request
-    ) {
-        UserResponse savedUser = userService.saveUserWithDto(request);
-        return ResponseEntity.ok(savedUser);
-    }
 
     // Get user by ID
     @Operation(summary = "Get user by ID", description = "Fetch a single user by ID")
@@ -126,12 +109,12 @@ public class UserController {
         return ResponseEntity.ok("User soft-deleted by " + type + ": " + value);
     }
 
-    // Get all users (admin only?)
     @GetMapping
     @Operation(summary = "Get all users", description = "Returns a list of all users (admin access recommended)")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Users fetched successfully")
     })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         List<UserResponse> responses = users.stream()
@@ -147,6 +130,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "User promoted to ADMIN"),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> promoteToAdmin(@PathVariable String username) {
         userService.promoteToAdmin(username);
         return ResponseEntity.ok(username + " has been promoted to ADMIN.");

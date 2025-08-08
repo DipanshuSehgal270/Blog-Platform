@@ -1,8 +1,8 @@
 package com.blog.platform.blog.platform.service;
 
 import com.blog.platform.blog.platform.dto.AuthorInfoDto;
-import com.blog.platform.blog.platform.dto.PostRequest;
-import com.blog.platform.blog.platform.dto.PostResponse;
+import com.blog.platform.blog.platform.dto.PostDTO.PostRequest;
+import com.blog.platform.blog.platform.dto.PostDTO.PostResponse;
 import com.blog.platform.blog.platform.entity.Post;
 import com.blog.platform.blog.platform.entity.User;
 import com.blog.platform.blog.platform.exception.ResourceNotFoundException;

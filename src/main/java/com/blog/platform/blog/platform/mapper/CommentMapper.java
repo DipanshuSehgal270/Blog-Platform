@@ -1,6 +1,6 @@
 package com.blog.platform.blog.platform.mapper;
 
-import com.blog.platform.blog.platform.dto.CommentResponse;
+import com.blog.platform.blog.platform.dto.CommentDTO.CommentResponse;
 import com.blog.platform.blog.platform.entity.Comment;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

@@ -1,9 +1,6 @@
 package com.blog.platform.blog.platform.controller;
 
-import com.blog.platform.blog.platform.dto.CommentRequest;
-import com.blog.platform.blog.platform.dto.CommentResponse;
-import com.blog.platform.blog.platform.dto.PostResponse;
-import com.blog.platform.blog.platform.entity.User;
+import com.blog.platform.blog.platform.dto.CommentDTO.CommentResponse;
 import com.blog.platform.blog.platform.repository.UserRepository;
 import com.blog.platform.blog.platform.service.CommentService;
 import com.blog.platform.blog.platform.service.PostService;
@@ -11,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

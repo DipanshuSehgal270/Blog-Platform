@@ -1,7 +1,7 @@
 package com.blog.platform.blog.platform.service;
 
-import com.blog.platform.blog.platform.dto.CommentRequest;
-import com.blog.platform.blog.platform.dto.CommentResponse;
+import com.blog.platform.blog.platform.dto.CommentDTO.CommentRequest;
+import com.blog.platform.blog.platform.dto.CommentDTO.CommentResponse;
 import com.blog.platform.blog.platform.entity.Comment;
 import com.blog.platform.blog.platform.entity.Post;
 import com.blog.platform.blog.platform.entity.User;

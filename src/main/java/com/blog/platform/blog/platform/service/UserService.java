@@ -1,8 +1,8 @@
 package com.blog.platform.blog.platform.service;
 
-import com.blog.platform.blog.platform.dto.RegisterRequest;
-import com.blog.platform.blog.platform.dto.UpdateUserRequest;
-import com.blog.platform.blog.platform.dto.UserResponse;
+import com.blog.platform.blog.platform.dto.UserDTO.RegisterRequest;
+import com.blog.platform.blog.platform.dto.UserDTO.UpdateUserRequest;
+import com.blog.platform.blog.platform.dto.UserDTO.UserResponse;
 import com.blog.platform.blog.platform.entity.Role;
 import com.blog.platform.blog.platform.entity.User;
 import com.blog.platform.blog.platform.exception.ResourceNotFoundException;
@@ -53,13 +53,13 @@ public class UserService {
     }
 
     //TODO PASSWORD ENCODER
-    public UserResponse saveUserWithDto(RegisterRequest request)
+    public UserResponse UpdateUserWithDto(RegisterRequest request)
     {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-        user.setUserrole(Role.ROLE_USER);
+        user.setUserrole(request.getUserRole());
         user.setEnabled(true);
 
         User saved = userRepository.save(user);

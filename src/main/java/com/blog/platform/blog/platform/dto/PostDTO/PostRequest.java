@@ -1,4 +1,4 @@
-package com.blog.platform.blog.platform.dto;
+package com.blog.platform.blog.platform.dto.PostDTO;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

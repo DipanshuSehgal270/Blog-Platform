@@ -1,4 +1,4 @@
-package com.blog.platform.blog.platform.dto;
+package com.blog.platform.blog.platform.dto.CommentDTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;

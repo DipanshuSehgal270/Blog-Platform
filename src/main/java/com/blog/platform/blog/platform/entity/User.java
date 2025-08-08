@@ -14,7 +14,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -22,10 +21,10 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-@Builder // Added Builder for the AuthService
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements UserDetails { // <-- IMPLEMENTS UserDetails
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +49,7 @@ public class User implements UserDetails { // <-- IMPLEMENTS UserDetails
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role userrole = Role.ROLE_USER;
+    private Role userrole ;
 
     @Column(length = 255)
     private String profileImageUrl;

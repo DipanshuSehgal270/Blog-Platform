@@ -1,4 +1,4 @@
-package com.blog.platform.blog.platform.dto;
+package com.blog.platform.blog.platform.dto.UserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserLoginRequest {
+public class UserRegisterRequest {
     private String username;
+    private String email;
     private String password;
 }
+
