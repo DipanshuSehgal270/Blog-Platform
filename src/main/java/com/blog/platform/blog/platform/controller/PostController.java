@@ -55,8 +55,13 @@ public class PostController {
     @Operation(summary = "Get all posts")
     @ApiResponse(responseCode = "200", description = "List of all posts")
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getAllPosts() {
-        return ResponseEntity.ok(postService.getAllPosts());
+    public ResponseEntity<List<PostResponse>> getAllPosts(@RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "createdAt") String sortBy,
+                                                          @RequestParam(defaultValue = "desc") String sortDir) {
+
+        List<PostResponse> posts = postService.getAllPosts(page, size, sortBy, sortDir);
+        return ResponseEntity.ok(posts);
     }
 
     // Update a post

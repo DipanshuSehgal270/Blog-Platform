@@ -10,7 +10,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+#      if anything goes wrong switch to validate run once then switch back to update
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:

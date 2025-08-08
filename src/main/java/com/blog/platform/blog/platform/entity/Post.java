@@ -9,11 +9,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "posts")
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString(exclude = {"user", "attachments", "comments", "reactions"})
+@EqualsAndHashCode(exclude = {"user", "attachments", "comments", "reactions"})
 public class Post {
 
     @Id
@@ -25,11 +27,6 @@ public class Post {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "author_id", nullable = false)
-//    @JsonIgnore
-//    private User author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

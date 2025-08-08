@@ -31,7 +31,8 @@ public class AuthService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword())) // Hash the password
-                .userrole(request.getUserRole()) // Assign default role
+                .userrole(request.getUserRole())
+                .enabled(true)// Assign default role
                 .build();
 
         // Save the new user to the database

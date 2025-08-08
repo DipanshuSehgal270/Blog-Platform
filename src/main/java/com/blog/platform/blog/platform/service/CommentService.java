@@ -9,7 +9,11 @@ import com.blog.platform.blog.platform.exception.ResourceNotFoundException;
 import com.blog.platform.blog.platform.mapper.CommentMapper;
 import com.blog.platform.blog.platform.repository.CommentRepository;
 import com.blog.platform.blog.platform.repository.PostRepository;
+import com.blog.platform.blog.platform.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -22,6 +26,8 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final CommentMapper commentMapper;
+    private final UserRepository userRepository;
+
 
     @Transactional(readOnly = true)
     public List<CommentResponse> getCommentsByPostId(Long postId) {
@@ -45,14 +51,24 @@ public class CommentService {
         return commentMapper.toResponse(comment);
     }
 
-    @Transactional
-    public CommentResponse createComment(CommentRequest request, User user, Long postId) {
+//    @Transactional
+    public CommentResponse createComment(CommentRequest request, Long postId) {
+        User user = getCurrentUser(); // this is giving error
+
+        if (user == null) {
+            // Handle the case where the user is not authenticated.
+            // This scenario should be prevented by your security configuration,
+            // but this check adds an extra layer of safety.
+            throw new IllegalStateException("Authenticated user not found.");
+        }
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
 
         Comment comment = new Comment();
         comment.setContent(request.getContent());
         comment.setUser(user);
+//        System.out.println("Managed? " + entityManager.contains(user));
+
         comment.setPost(post);
 
         Comment savedComment = commentRepository.save(comment);
@@ -60,12 +76,12 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResponse createReply(Long parentId, CommentRequest request, User user, Long postId) {
+    public CommentResponse createReply(Long parentId, CommentRequest request, User user) {
         Comment parent = commentRepository.findById(parentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parent Comment", "id", parentId));
 
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
+        // Get the post from the parent comment to ensure consistency
+        Post post = parent.getPost();
 
         Comment reply = new Comment();
         reply.setContent(request.getContent());
@@ -95,4 +111,31 @@ public class CommentService {
 
         commentRepository.delete(comment);
     }
+
+    public boolean isPostOwnerByCommentId(Long commentId, User user) {
+        // 1. Find the comment by its ID.
+        // We use orElse(null) here because the PreAuthorize check should not throw an exception.
+        Comment comment = commentRepository.findById(commentId).orElse(null);
+
+        // 2. If the comment exists, check if the post it belongs to is owned by the user.
+        return comment != null && comment.getPost().getUser().getId().equals(user.getId());
+    }
+
+    public boolean isCommentOwner(Long commentId, User user) {
+        Comment comment = commentRepository.findById(commentId).orElse(null);
+        return comment != null && comment.getUser().getId().equals(user.getId());
+    }
+
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()
+                || authentication.getPrincipal().equals("anonymousUser")) {
+            return null;
+        }
+
+        String username = authentication.getName();
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
+
 }

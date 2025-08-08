@@ -1,31 +1,31 @@
-spring:
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    show-sql: false
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-        format_sql: true
-
-  application:
-    name: blog-platform
-    security:
-      jwt:
-        secret-key: ${JWT_SECRET_KEY}
-
-server:
-  port: 8080
-
-logging:
-  level:
-    root: INFO
-    com.blog.platform: DEBUG
-    org.springframework.security: DEBUG
-    org.hibernate.SQL: WARN
+#spring:
+#  datasource:
+#    url: ${DB_URL}
+#    username: ${DB_USERNAME}
+#    password: ${DB_PASSWORD}
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: validate
+#    show-sql: false
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQLDialect
+#        format_sql: true
+#
+#  application:
+#    name: blog-platform
+#    security:
+#      jwt:
+#        secret-key: ${JWT_SECRET_KEY}
+#
+#server:
+#  port: 8080
+#
+#logging:
+#  level:
+#    root: INFO
+#    com.blog.platform: DEBUG
+#    org.springframework.security: DEBUG
+#    org.hibernate.SQL: WARN
