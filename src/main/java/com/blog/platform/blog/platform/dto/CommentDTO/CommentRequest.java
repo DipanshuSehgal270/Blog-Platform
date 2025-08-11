@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentRequest {
 
-    private String profileImageUrl;
     @NotBlank
     private String username;
     @NotBlank

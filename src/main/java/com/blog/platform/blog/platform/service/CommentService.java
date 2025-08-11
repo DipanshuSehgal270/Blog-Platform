@@ -31,7 +31,6 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentResponse> getCommentsByPostId(Long postId) {
-        // You should fetch the post first to ensure it exists before querying for comments
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
 
@@ -51,7 +50,6 @@ public class CommentService {
         return commentMapper.toResponse(comment);
     }
 
-//    @Transactional
     public CommentResponse createComment(CommentRequest request, Long postId) {
         User user = getCurrentUser(); // this is giving error
 
@@ -67,8 +65,6 @@ public class CommentService {
         Comment comment = new Comment();
         comment.setContent(request.getContent());
         comment.setUser(user);
-//        System.out.println("Managed? " + entityManager.contains(user));
-
         comment.setPost(post);
 
         Comment savedComment = commentRepository.save(comment);

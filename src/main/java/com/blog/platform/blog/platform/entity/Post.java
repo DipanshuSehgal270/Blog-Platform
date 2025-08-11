@@ -33,18 +33,18 @@ public class Post {
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.LAZY)
     @JsonIgnore
     private List<FileAttachment> attachments;
 
     @Column(nullable = false)
     private Integer likeCount = 0;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Reaction> reactions;
 

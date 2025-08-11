@@ -5,7 +5,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,12 +23,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"posts"}) //  prevents recursion
-@EqualsAndHashCode(exclude = {"posts"}) //  prevents recursion in comparisons
+@Getter // Provides getters for all fields
+@Setter // Provides setters for all fields
+@ToString(exclude = {"posts"}) // Explicitly excludes 'posts'
+@EqualsAndHashCode(exclude = {"posts"}) // Explicitly excludes 'posts'
 public class User implements UserDetails {
 
     @Id
@@ -30,25 +37,25 @@ public class User implements UserDetails {
     private Long id;
 
     @NotBlank(message = "username should not be left blank")
-    @Size(min = 3, max = 100)
-    @Column(nullable = false, unique = true) // Added unique constraint
+    @Size(min = 3, max = 50)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @NotBlank(message = "email field is required")
-    @Size(min = 3, max = 100)
+    @Size(min = 3, max = 100) // Increased size for email
     @Email(message = "please provide a valid email")
     @Column(nullable = false, unique = true)
     private String email;
 
     @NotBlank(message = "password is required")
-    @Size(min = 3, max = 100) // Increased max size for hashed password
+    @Size(min = 3, max = 255) // Corrected size to accommodate hashed password
     @JsonIgnore
     @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role userrole ;
+    private Role userrole;
 
     @Column(length = 255)
     private String profileImageUrl;
@@ -56,7 +63,7 @@ public class User implements UserDetails {
     @Column(length = 150)
     private String bio;
 
-    @OneToMany(mappedBy = "user") // Changed from 'author' to 'user' to match Comment entity
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Post> posts;
 
@@ -70,7 +77,6 @@ public class User implements UserDetails {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
 
     // --- UserDetails Methods ---
 
@@ -91,17 +97,17 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true; // Or add logic for account expiration
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true; // Or add logic for account locking
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; // Or add logic for password expiration
+        return true;
     }
 
     @Override

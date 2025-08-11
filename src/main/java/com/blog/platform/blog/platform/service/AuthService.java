@@ -3,7 +3,6 @@ package com.blog.platform.blog.platform.service;
 import com.blog.platform.blog.platform.dto.AuthResponse;
 import com.blog.platform.blog.platform.dto.UserDTO.UserLoginRequest;
 import com.blog.platform.blog.platform.dto.UserDTO.RegisterRequest;
-import com.blog.platform.blog.platform.entity.Role;
 import com.blog.platform.blog.platform.entity.User;
 import com.blog.platform.blog.platform.repository.UserRepository;
 import com.blog.platform.blog.platform.security.jwt.JwtService;
@@ -32,6 +31,7 @@ public class AuthService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword())) // Hash the password
                 .userrole(request.getUserRole())
+                .profileImageUrl(request.getProfileImageUrl())
                 .enabled(true)// Assign default role
                 .build();
 
