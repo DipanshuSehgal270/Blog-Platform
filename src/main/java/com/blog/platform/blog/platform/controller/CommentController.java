@@ -2,6 +2,7 @@ package com.blog.platform.blog.platform.controller;
 
 import com.blog.platform.blog.platform.dto.CommentDTO.CommentRequest;
 import com.blog.platform.blog.platform.dto.CommentDTO.CommentResponse;
+import com.blog.platform.blog.platform.dto.ReplyDTO.SimpleReplyDTO;
 import com.blog.platform.blog.platform.entity.User;
 import com.blog.platform.blog.platform.service.CommentService;
 import com.blog.platform.blog.platform.service.PostService;
@@ -100,13 +101,13 @@ public class CommentController {
             @ApiResponse(responseCode = "404", description = "Parent comment not found")
     })
     @PostMapping("/{parentId}/replies")
-    public ResponseEntity<CommentResponse> createReply(
+    public ResponseEntity<SimpleReplyDTO > createReply(
             @PathVariable Long parentId,
             @RequestBody CommentRequest request,
             @AuthenticationPrincipal User user
     ) {
         // The service will handle fetching the post ID from the parent comment.
-        CommentResponse reply = commentService.createReply(parentId, request, user);
+        SimpleReplyDTO  reply = commentService.createReply(parentId, request);
         return new ResponseEntity<>(reply, HttpStatus.CREATED);
     }
 

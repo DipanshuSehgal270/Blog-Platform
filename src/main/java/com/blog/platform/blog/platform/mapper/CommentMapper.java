@@ -1,6 +1,7 @@
 package com.blog.platform.blog.platform.mapper;
 
 import com.blog.platform.blog.platform.dto.CommentDTO.CommentResponse;
+import com.blog.platform.blog.platform.dto.ReplyDTO.SimpleReplyDTO;
 import com.blog.platform.blog.platform.entity.Comment;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -15,11 +16,15 @@ public interface CommentMapper {
     @Mapping(target = "dislikes", ignore = true)
     CommentResponse toResponse(Comment comment);
 
-    @InheritInverseConfiguration
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "user", ignore = true)
-    @Mapping(target = "post", ignore = true)
-    @Mapping(target = "parent", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    Comment toEntity(CommentResponse response);
+//    @InheritInverseConfiguration
+//    @Mapping(target = "id", ignore = true)
+//    @Mapping(target = "user", ignore = true)
+//    @Mapping(target = "post", ignore = true)
+//    @Mapping(target = "parent", ignore = true)
+//    @Mapping(target = "createdAt", ignore = true)
+//    Comment toEntity(CommentResponse response);
+
+    @Mapping(target = "username", source = "user.username")
+    @Mapping(target = "profileImageUrl", source = "user.profileImageUrl")
+    SimpleReplyDTO toSimpleReply(Comment reply);
 }

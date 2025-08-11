@@ -2,6 +2,7 @@ package com.blog.platform.blog.platform.service;
 
 import com.blog.platform.blog.platform.dto.CommentDTO.CommentRequest;
 import com.blog.platform.blog.platform.dto.CommentDTO.CommentResponse;
+import com.blog.platform.blog.platform.dto.ReplyDTO.SimpleReplyDTO;
 import com.blog.platform.blog.platform.entity.Comment;
 import com.blog.platform.blog.platform.entity.Post;
 import com.blog.platform.blog.platform.entity.User;
@@ -72,22 +73,26 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentResponse createReply(Long parentId, CommentRequest request, User user) {
+    public SimpleReplyDTO createReply(Long parentId, CommentRequest request) {
+
+        User user = getCurrentUser();
+
         Comment parent = commentRepository.findById(parentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Parent Comment", "id", parentId));
 
-        // Get the post from the parent comment to ensure consistency
-        Post post = parent.getPost();
-
-        Comment reply = new Comment();
-        reply.setContent(request.getContent());
-        reply.setUser(user);
-        reply.setPost(post);
-        reply.setParent(parent);
+        Comment reply = Comment.builder()
+                .content(request.getContent())
+                .user(user)
+                .post(parent.getPost())
+                .parent(parent)
+                .build();
 
         Comment savedReply = commentRepository.save(reply);
-        return commentMapper.toResponse(savedReply);
+
+        // Return only the reply info
+        return commentMapper.toSimpleReply(savedReply);
     }
+
 
     @Transactional
     public CommentResponse updateComment(Long id, String newContent) {

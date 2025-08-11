@@ -11,7 +11,5 @@ import lombok.NoArgsConstructor;
 public class CommentRequest {
 
     @NotBlank
-    private String username;
-    @NotBlank
     private String content;
 }

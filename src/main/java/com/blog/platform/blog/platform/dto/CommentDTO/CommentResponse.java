@@ -1,5 +1,6 @@
 package com.blog.platform.blog.platform.dto.CommentDTO;
 
+import com.blog.platform.blog.platform.dto.ReplyDTO.SimpleReplyDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -13,25 +14,15 @@ import java.util.List;
 @NoArgsConstructor
 public class CommentResponse {
 
-    @Schema(description = "Comment author's profile image")
     private String profileImageUrl;
-
-    @Schema(description = "Comment author's username")
     private String username;
-
-    @Schema(description = "Content of the comment")
     private String content;
-
-    @Schema(description = "Number of likes on this comment")
     private int likes;
-
-    @Schema(description = "Number of dislikes on this comment")
     private int dislikes;
 
-    @Schema(description = "Timestamp of comment creation")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
-    @Schema(description = "List of replies to this comment (if any)")
-    private List<CommentResponse> replies;
+    // Only one level of replies
+    private List<SimpleReplyDTO> replies;
 }

@@ -1,5 +1,6 @@
 package com.blog.platform.blog.platform.entity;
 
+import com.blog.platform.blog.platform.dto.ReplyDTO.SimpleReplyDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +14,7 @@ import java.util.Locale;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Comment {
 
     @Id
@@ -27,7 +29,6 @@ public class Comment {
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -39,6 +40,7 @@ public class Comment {
     @JoinColumn(name = "parent_id")
     private Comment parent;
 
+    //TODO ERROR
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.LAZY)
     private List<Comment> replies = new ArrayList<>();
 
