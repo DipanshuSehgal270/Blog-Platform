@@ -76,7 +76,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "User soft-deleted successfully"),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    public ResponseEntity<?> softDeleteUser(@PathVariable Long id) {
+    public ResponseEntity<String> softDeleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.ok("User soft-deleted.");
     }
@@ -88,7 +88,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "User deleted successfully"),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    public ResponseEntity<?> hardDeleteUser(@PathVariable Long id) {
+    public ResponseEntity<String> hardDeleteUser(@PathVariable Long id) {
         userService.hardDeleteById(id);
         return ResponseEntity.ok("User permanently deleted.");
     }
@@ -101,7 +101,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid identifier type"),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    public ResponseEntity<?> deleteUserByType(
+    public ResponseEntity<String> deleteUserByType(
             @RequestParam String type,
             @RequestParam String value
     ) {
@@ -131,7 +131,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found")
     })
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> promoteToAdmin(@PathVariable String username) {
+    public ResponseEntity<String> promoteToAdmin(@PathVariable String username) {
         userService.promoteToAdmin(username);
         return ResponseEntity.ok(username + " has been promoted to ADMIN.");
     }

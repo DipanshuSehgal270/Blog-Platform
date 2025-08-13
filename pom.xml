@@ -29,6 +29,9 @@
 	<properties>
 		<java.version>17</java.version>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.projectKey>bloggy</sonar.projectKey>
+		<sonar.projectName>'bloggy'</sonar.projectName>
+		<sonar.token>sqp_b843c25521316853dc846a44e49bc26285972db6</sonar.token>
 	</properties>
 	<dependencies>
 		<dependency>

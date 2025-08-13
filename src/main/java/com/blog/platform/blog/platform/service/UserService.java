@@ -7,18 +7,19 @@ import com.blog.platform.blog.platform.entity.Role;
 import com.blog.platform.blog.platform.entity.User;
 import com.blog.platform.blog.platform.exception.ResourceNotFoundException;
 import com.blog.platform.blog.platform.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     //CRUD user , get user by id , username , email
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public List<User> getAllUsers()
     {
